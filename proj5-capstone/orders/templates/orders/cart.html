@@ -1,0 +1,67 @@
+{% extends 'orders/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="cart-container">
+    <h2>Your Cart</h2>
+    {% if order %}
+        <div class="cart-items-container">
+            <!-- Cart items section -->
+            <div class="cart-items-section">
+                <!-- Add headers row -->
+                <div class="cart-header-row">
+                    <div class="header-image"></div>
+                    <div class="header-name">Item</div>
+                    <div class="header-quantity">Quantity</div>
+                    <div class="header-price">Price</div>
+                    <div class="header-actions"></div>
+                </div>
+
+                {% for OrderItem in order.orderitem_set.all %}
+                    <!-- ... existing cart item content ... -->
+                    <div class="cart-item-row">
+                        <div class="cart-image-container">
+                            {% if OrderItem.menu_item.image %}
+                                <img src="{{ OrderItem.menu_item.image.url }}" alt="{{ OrderItem.menu_item.item_name }}" class="item-image">
+                            {% else %}
+                                <img src="{% static 'orders\default_image.jpg' %}" alt="{{ OrderItem.menu_item.item_name }}">
+                            {% endif %}
+                        </div>
+                        <div class="item-name">
+                            <b>{{ OrderItem.menu_item.item_name }}</b>
+                        </div>
+                        <div class="item-quantity">
+                            <span class="item-quantity" data-item-id="{{ OrderItem.menu_item.id }}">0</span>
+                        </div>
+        
+                        <div class="item-total-price" data-item-id="{{ OrderItem.menu_item.id }}">
+                            ${{ OrderItem.total_price }}
+                        </div>
+                        <div class="order-controls">
+                            <button class="remove-from-order" data-item-id="{{ OrderItem.menu_item.id }}" aria-label="Remove from order"></button>
+                            <!-- <span class="item-quantity" data-item-id="{{ OrderItem.menu_item.id }}">0</span> -->
+                            <button class="add-to-order" data-item-id="{{ OrderItem.menu_item.id }}" aria-label="Add to order"></button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Checkout section -->
+            <div class="cart-checkout-section">
+                <div class="total-bill">
+                    <div class="total-label">Subtotal:</div>
+                    <div class="total-amount">S${{ order.total_price }}</div>            
+                </div>
+                <a href="{% url 'checkout' %}" class="checkout-button">Proceed to Checkout</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="empty-cart-message">
+            <p>Your cart is empty.</p>
+            <a href="{% url 'restaurant_selection' %}" class="btn btn-primary">Browse Restaurants</a>
+        </div>
+    {% endif %}
+</div>
+
+<script type="module" src="{% static 'js/cart_management.js' %}"></script>
+{% endblock %}

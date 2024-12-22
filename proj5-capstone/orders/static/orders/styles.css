@@ -1,0 +1,887 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* -------------------------------------------------- */
+/* Restaurant and Menu Item Card Styles */
+
+.restaurant-grid, .menu-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.restaurant-card, 
+.menu-item-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    background-color: #fff;
+    height: 300px; /* Fixed height */
+    width: 100%; /* Full width of grid cell */
+}
+
+.restaurant-card:hover,
+.menu-item-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* limit images to 180px height in the card */
+.restaurant-image-container,
+.menu-image-container {
+    position: relative;
+    width: 100%;
+    height: 180px; /* Fixed height for image container */
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden; /* Hide overflow */
+}
+
+.restaurant-image, 
+.restaurant-image-container img,
+.menu-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This ensures the image covers the area of the container without distortion */
+}
+
+/* -------------------------------------------------- */
+/* Restaurant Details Styles */
+
+.restaurant-details {
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevent content from expanding card */
+}
+
+.restaurant-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    white-space: nowrap;         /* Prevent text from wrapping */
+    overflow: hidden;            /* Hide overflow content */
+    text-overflow: ellipsis;     /* Add ... at the end */
+    max-width: 100%;             /* Ensure it doesn't overflow container */
+}
+
+.menu-item-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    /* Remove white-space: nowrap to allow wrapping */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;  /* Limit to 2 lines */
+    line-clamp: 2;          /* Standard property */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;  /* Adjust line height for better readability */
+    height: 2.4em;     /* 2 lines × 1.2 line-height */
+}
+
+.restaurant-cuisine {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.restaurant-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.restaurant-rating, .restaurant-hours {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 12px;
+}
+
+/* -------------------------------------------------- */
+/* Link Styles */
+
+.restaurant-grid a.restaurant-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.restaurant-grid a.restaurant-card-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* -------------------------------------------------- */
+/* Menu Item Styles */
+
+.item-details {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.item-details b {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.price {
+    margin-bottom: 10px;
+}
+
+/* -------------------------------------------------- */
+/* Order Control Buttons */
+
+.order-controls {
+    display: flex;
+    align-items: center;  /* Center items vertically */
+    justify-content: center;  /* Center items horizontally */
+    gap: 10px;
+    margin-top: 0;  /* Remove the auto margin */
+    padding-top: 0;  /* Remove the padding */
+    width: 100%;
+}
+
+.add-to-order, .remove-from-order {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    line-height: 0; /* Changed from 1 to 0 */
+    text-align: center; /* Added */
+    vertical-align: middle; /* Added */
+}
+
+.add-to-order::before {
+    content: "+";
+    display: block;
+    margin-top: -2px; /* Fine-tune vertical alignment */
+}
+
+.remove-from-order::before {
+    content: "−";
+    display: block;
+    margin-top: -2px; /* Fine-tune vertical alignment */
+}
+
+.add-to-order {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.add-to-order:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+}
+
+.remove-from-order {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.remove-from-order:hover {
+    background-color: #ff5252;
+    transform: scale(1.1);
+}
+
+.item-quantity {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Disable button styles */
+.add-to-order:disabled,
+.remove-from-order:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* -------------------------------------------------- */
+/* Cart Styles */
+
+.cart-items-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.cart-item-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 1fr 1fr; /* Adjusted the last column */
+    gap: 20px;
+    align-items: center;  /* This ensures all items are vertically centered */
+    justify-items: center; /* Added to center items horizontally */
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.cart-item-row:hover {
+    background-color: #f8f9fa;
+}
+
+.cart-item-row:last-child {
+    border-bottom: none;
+}
+
+.cart-image-container {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cart-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.checkout-button {
+    display: block;
+    width: 100%;
+    padding: 12px 24px;
+    background-color: #007bff;  /* blue color, you can adjust */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-button:hover {
+    background-color: #0b5ed7;  /* Darker blue on hover */
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.checkout-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.item-name {
+    font-size: 0.9rem; /* Reduced font size */
+    font-weight: normal; /* Removed bold styling */
+    justify-self: start; /* Align text to the left */
+    color: #444; /* Added lighter black/gray color */
+}
+
+
+.item-total-price {
+    font-weight: bold;
+    color: #2d3436;
+}
+
+/* -------------------------------------------------- */
+/* Total Bill Styles */
+
+.total-bill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.total-bill .total-label {
+    font-size: 1.1rem;
+    color: #495057;
+    font-weight: 500;
+}
+
+.total-bill .total-amount {
+    font-size: 1.3rem;
+    color: #2d3436;
+    font-weight: 600;
+}
+
+/* -------------------------------------------------- */
+/* Order History Styles */
+
+.order-history-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.order-history-container h2 {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.order-table th,
+.order-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.order-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+}
+
+.order-table tr:last-child td {
+    border-bottom: none;
+}
+
+.order-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.empty-orders {
+    text-align: center;
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    color: #6c757d;
+}
+
+@media (max-width: 768px) {
+    .order-table {
+        font-size: 0.9em;
+    }
+    
+    .order-table th,
+    .order-table td {
+        padding: 10px;
+    }
+}
+
+/* -------------------------------------------------- */
+/* Cart Headers */
+.cart-header-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.header-image,
+.header-name,
+.header-quantity,
+.header-price,
+.header-actions {
+    text-align: center;
+}
+
+.header-name {
+    justify-self: start;
+}
+
+/* -------------------------------------------------- */
+/* Status Badge Styles */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+/* Different status colors */
+.status-incart {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.status-checkout {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+.status-paid {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-accepted {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.status-completed {
+    background-color: #198754;
+    color: white;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* -------------------------------------------------- */
+/* Checkout Section Styles */
+.cart-checkout-section {
+    background-color: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 24px;
+}
+
+
+.payment-form {
+    margin-top: 20px;
+}
+
+.payment-button {
+    display: block;
+    width: 100%;
+    padding: 16px 32px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-button:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+.payment-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(13, 110, 253, 0.1);
+}
+
+
+/* -------------------------------------------------- */
+/* Additional styles for kitchen history */
+.order-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9em;
+}
+
+.order-items-list li {
+    margin-bottom: 3px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.2rem;
+}
+
+/* -------------------------------------------------- */
+/* Close Button Styles */
+.btn-close {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    opacity: 0.5;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.btn-close:hover {
+    opacity: 1;
+}
+
+.btn-close::before,
+.btn-close::after {
+    position: absolute;
+    content: '';
+    width: 2px;
+    height: 16px;
+    background-color: #000;
+    left: 50%;
+    top: 50%;
+}
+
+.btn-close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.btn-close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+
+
+/* -------------------------------------------------- */
+/* Kitchen Orders Styles */
+.kitchen-orders-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.order-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-header {
+    background: #f8f9fa;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.order-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.order-id {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.customer-info {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.customer-info i {
+    margin-right: 5px;
+}
+
+.order-items {
+    padding: 12px;
+    flex-grow: 1;
+    background: white;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 0.9rem;
+}
+
+.item-quantity {
+    font-weight: bold;
+    margin-right: 8px;
+    color: #495057;
+    min-width: 30px;
+}
+
+
+.order-footer {
+    padding: 12px;
+    background: #f8f9fa;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-total {
+    font-weight: bold;
+    color: #333;
+}
+
+.order-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.order-actions .btn {
+    padding: 4px 12px;
+    font-size: 0.85rem;
+}
+
+/* -------------------------------------------------- */
+/* Media Queries for Responsiveness */
+
+@media (max-width: 768px) {
+    .restaurant-card,
+    .menu-item-card {
+        height: 280px; /* Slightly smaller on tablets */
+    }
+
+    .restaurant-image-container,
+    .menu-image-container {
+        height: 160px;
+    }
+
+    .restaurant-grid, .menu-items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    /* Cart responsive styles */
+    .cart-header-row, .cart-item-row {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 10px;
+        padding: 10px;
+        margin: 0 auto; /* Center the grid */
+        width: 90%; /* Take up 90% of the container width */
+    }
+
+    .cart-image-container {
+        display: none;
+    }
+
+    .item-name {
+        font-size: 0.8rem; /* Reduced font size */
+    }
+
+    .header-image {
+        display: none;
+    }
+
+    .header-name,
+    .header-quantity,
+    .header-price,
+    .header-actions {
+        font-size: 0.9rem;
+    }
+
+    .order-table td {
+        font-size: 0.85em;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 3px;
+    }
+    
+    .btn-sm {
+        width: 100%;
+        margin: 2px 0;
+    }    
+}
+
+@media (max-width: 480px) {
+    .restaurant-card,
+    .menu-item-card {
+        height: 250px; /* Even smaller on phones */
+    }
+
+    .restaurant-image-container,
+    .menu-image-container {
+        height: 140px;
+    }
+
+    .restaurant-details {
+        padding: 10px;
+    }
+
+    .restaurant-name {
+        font-size: 1rem; /* Smaller font for mobile */
+    }
+
+    .restaurant-cuisine {
+        font-size: 0.8rem;
+    }
+
+    .restaurant-info {
+        gap: 5px;
+        font-size: 0.75rem;
+    }
+    /* KEY CHANGE 1: Set up a 4-column grid layout
+     * - 2fr for name (wider column)
+     * - 1fr each for quantity, price, and controls
+     * This ensures all elements stay in a single row */
+    .cart-header-row, .cart-item-row {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 8px;
+        padding: 12px 8px;
+        margin: 0 auto;
+        width: 100%;
+        align-items: center;
+    }
+
+    /* KEY CHANGE 2: Hide images on mobile to save space */
+    .cart-image-container {
+        display: none;
+    }
+
+    /* KEY CHANGE 3: Position each element in its specific grid column
+     * to maintain a consistent single-row layout */
+    .item-name {
+        grid-column: 1;
+        font-size: 0.85rem;
+        padding-right: 5px;
+        justify-self: start;
+    }
+
+    .item-quantity {
+        grid-column: 2;
+        font-size: 0.85rem;
+        justify-self: center;
+    }
+
+    .item-total-price {
+        grid-column: 3;
+        font-size: 0.85rem;
+        justify-self: center;
+    }
+    
+    .item-details {
+        padding: 10px;
+    }
+
+    .item-details b {
+        font-size: 0.9rem;
+    }
+
+    .price {
+        font-size: 0.85rem;
+    }
+
+    .order-controls {
+        grid-column: 4;
+        justify-content: center;
+        padding-top: 0;
+        gap: 5px;
+    }
+
+    /* KEY CHANGE 4: Make control buttons smaller but still usable on mobile */
+    .add-to-order, .remove-from-order {
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+    }
+
+    /* KEY CHANGE 5: Adjust spacing and sizing for mobile view */
+    .cart-container {
+        padding: 12px;
+    }
+
+    .cart-items-container,
+    .cart-checkout-section {
+        border-radius: 8px;
+    }
+
+    .cart-header-row,
+    .cart-item-row {
+        padding: 16px;
+    }
+
+    .total-bill {
+        padding: 12px 16px;
+    }
+
+    .total-bill .total-label {
+        font-size: 1rem;
+        
+    }
+
+    .total-bill .total-amount {
+        font-size: 1.2rem;
+    }
+
+    /* KEY CHANGE 6: Make checkout button full width and prominent */
+    .checkout-button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        text-align: center;
+        background-color: #007bff;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .cart-checkout-section {
+        padding: 8px;
+    }
+
+    .payment-button {
+        padding: 14px 24px;
+        font-size: 1rem;
+    }
+}
