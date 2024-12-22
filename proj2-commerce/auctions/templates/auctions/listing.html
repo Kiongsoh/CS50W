@@ -1,0 +1,97 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Listing Details</h2>
+
+{% if message != None %}
+    <div class="alert alert-warning" role="alert">
+       {{ message }}
+    </div>
+{% endif %}
+
+{% if user.is_authenticated %}
+    
+    <!-- watchlist -->
+    <!-- if user is signed in, user should be able to add or remove items from their watch list -->
+    {% if is_watchlist == True %}
+    <form action="{% url 'removeWatchlist' post_id=listing.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning">Remove from Watchlist</button>
+    </form>
+    {% else %}
+    <form action="{% url 'addWatchlist' post_id=listing.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Add to Watchlist</button>
+    </form>
+    {% endif %}
+
+    <br><br>
+    <!-- <img src="../../{{ listing.image_url }}" class="card-img-top" alt="{{ listing.title }}" height="214px"> -->
+    <img src="../../{{ listing.image_url }}" height="214px">
+
+    <!-- if user won the auction -->
+    <!-- if listing is closed and user is not owner, and user is last bidder-->
+    {% if listing.active_status == False and user != listing.owner and user == last_bid.bidder %}
+    <div class="alert alert-success" role="alert">
+        Congratulations {{last_bid.bidder}}! You have won the auction!
+        </div>
+        
+    <!-- if user is signed in, user should be able to bid -->
+    <!-- if user is owner and listing is active, user can close bid-->
+    {% elif listing.active_status and user == listing.owner %}
+    <form action="{% url 'close_bid' post_id=listing.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning">Close Auction</button>
+    </form>
+
+    <!-- if listing is active and user is not owner, user can bid-->
+    {% elif listing.active_status == True and user != listing.owner %}
+    <form action="{% url 'new_bid' post_id=listing.id %}" method="post">
+        {% csrf_token %}
+        <input type="number" name="bid_price">
+        <button type="submit" class="btn btn-success">Submit Bid</button>
+    </form>
+    {% endif %}
+
+{% endif %}
+
+
+<br><br>
+<h6>Item Name: {{ listing.title }}</h6>
+<p>Seller Name: {{ listing.owner }}</p>
+<p>Current Price: ${{ last_bid.price }}</p>
+{% if listing.owner != last_bid.bidder %}
+    <p>Last Bidder: {{last_bid.bidder}}</p>
+{% endif %}
+<p>Description: {{ listing.description }}</p>
+<br>
+
+<h4>User Comments</h4>
+{% if user.is_authenticated %}
+    <!-- ability to add comments and display in listing -->
+    <form action="{% url 'comment' post_id=listing.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="user_comment">
+        <button type="submit" class="btn btn-success">Comment</button>
+    </form>
+{% endif %}
+
+<!-- display comment -->
+
+<ul class="list-group">
+    {% for comment in all_commments %}
+    <div class="row align-items-start" style="width:70%; border:1px solid grey">
+        <div class="col-6">
+            {{ comment.comment }}
+        </div>
+        <div class="col-3">
+            {{ comment.author }}
+        </div>
+        <div class="col-3">
+            {{ comment.date_time }}
+        </div>
+    </div>
+    {% endfor %}
+</ul>
+
+{% endblock %}

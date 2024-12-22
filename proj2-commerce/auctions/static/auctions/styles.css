@@ -1,0 +1,12 @@
+body {
+    padding: 10px;
+}
+
+.form-control {
+    max-width: 500px;
+    width: 50%;
+}
+
+.col {
+    align-content: end;
+}

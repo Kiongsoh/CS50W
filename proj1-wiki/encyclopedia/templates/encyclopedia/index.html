@@ -1,0 +1,20 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+Encyclopedia
+{% endblock %}
+
+{% block body %}
+<h1>All Pages</h1>
+
+<ul>
+    {% for entry in entries %}
+    <!-- to avoid name collision wiki:entry-->
+    <!-- <a href="/wiki/CSS">CSS</a> -->
+    <!-- pass entry as title to the url path which will form a dynamic url path  -->
+    <li><a href="{% url 'entry' title=entry %}">{{ entry }}</a></li>
+    <!-- <li>{{ entry }}</li> -->
+    {% endfor %}
+</ul>
+
+{% endblock %}

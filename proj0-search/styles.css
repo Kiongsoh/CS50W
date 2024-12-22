@@ -1,0 +1,129 @@
+.nav-bar {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: flex-end;
+    list-style-type: none;
+}
+
+.nav-bar-item {
+    color: black;
+    margin: 10px;
+}
+
+.center-div {
+    display: flex;
+    justify-content: center;
+}
+
+.rounded-input {
+    display: flex;
+    z-index: 3;
+    position: relative;
+    min-height: 44px;
+    border: 1px solid #dfe1e5;
+    box-shadow: none;
+    border-radius: 24px;
+    margin: 0 auto;
+    width: 584px;
+    max-width: 584px;
+}
+
+.div-buttons {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+}
+
+.div-button {
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 4px;
+    color: #3c4043;
+    font-family: arial, sans-serif;
+    font-size: 14px;
+    margin: 11px 4px;
+    padding: 0 16px;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.advanced-div {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.left {
+    width: 30%;
+}
+
+.right {
+    width: 70%;
+    /* border: 1px solid black; */
+}
+
+.right input {
+    width: 500px;
+    height: 25px;
+    border-radius: 1px;
+    border: 1px solid #d9d9d9;
+    font-size: 13px;
+    padding: 1px 8px;
+}
+
+.left p {
+    color: #222;
+    font-size: 13px;
+}
+
+.advanced-button {
+    height: 30px;
+    width: 120px;
+    min-width: 120px;
+    border: 1px solid #3079ed;
+    background-color: #3079ed;
+    color: white;
+    border-radius: 2px;
+}
+
+.right-button {
+    width: 516px;
+    /* padding: 1px 8px; */
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.advanced-button-div {
+    display: flex;
+    justify-content: flex-end;
+    border: 1px solid black;
+    width: 65%;
+}
+
+/* unvisited link */
+a:link {
+    color: black;
+    text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+    color: black;
+}
+
+/* mouse over link */
+a:hover {
+    color: black;
+}
+
+/* selected link */
+a:active {
+    color: black;
+}

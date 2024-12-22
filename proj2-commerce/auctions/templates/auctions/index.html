@@ -1,0 +1,44 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Active Listings</h2>
+
+<!-- drop down food category filter selection -->
+<form action="{% url 'displayCategory' %}" method="post">
+    {% csrf_token %}
+    <select class="form-select form-select-lg mb-3" aria-label="Large select example" name="category">
+        <option selected>All Categories</option>
+        {% for category in food_category %}
+        <!-- value is what u submit in the backend-->
+        <option value="{{ category.categoryName }}">{{ category.categoryName }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-warning">Select</button>
+</form>
+
+<!-- at min, display title, descrp, current price, and photo -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for listing in active_listing %}
+    <div class="col">
+        <div class="card">
+            <img src="{{ listing.image_url }}" class="card-img-top" alt="{{ listing.title }}" height="214px">
+            <div class="card-body">
+                <h5 class="card-title">{{ listing.title }}</h5>
+                {% for key, value in all_last_bids.items %}
+
+                    {% if key == listing.id %}
+                        Current Price: ${{ value }}
+                    {% endif %}
+
+                {% endfor %}
+
+                <p class="card-text">Description: {{ listing.description }}</p>
+                <!-- current price is not yet included -->
+                <a href="{% url 'listing' post_id=listing.id %}" class="btn btn-primary">Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

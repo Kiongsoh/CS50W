@@ -1,0 +1,43 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Create Listing</h2>
+
+<div class="form-div">
+    <!-- action is where you want to send the data -->
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="create_form_input_title" class="form-label">Title</label>
+            <input id="create_form_input_title" type="text" class="form-control" name="title">
+        </div>
+
+        <div class="mb-3">
+            <label for="create_form_input_desc" class="form-label">Description</label>
+            <input type="text" id="create_form_input_desc" class="form-control" name="description">
+        </div>
+
+        <div class="mb-3">
+            <label for="create_form_input_start_bid" class="form-label">Start Bid</label>
+            <input type="number" id="create_form_input_start_bid" class="form-control" name="start_bid">
+        </div>
+
+        <div class="mb-3">
+            <label for="create_form_input_url" class="form-label">Image url</label>
+            <input type="text" id="create_form_input_url" class="form-control" name="image_url">
+        </div>
+
+        <!-- <input type="text" name="category"> -->
+        <select class="form-select form-select-lg mb-3" aria-label="Large select example" name="category">
+            <option selected>Open this select menu</option>
+            {% for category in food_category %}
+            <!-- value is what u submit in the backend-->
+            <option value="{{ category.categoryName }}">{{ category.categoryName }}</option>
+            {% endfor %}
+        </select>
+
+        <div><button type="submit" class="btn btn-primary">Save</button></div>
+    </form>
+</div>
+
+{% endblock %}
