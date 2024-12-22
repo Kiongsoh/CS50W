@@ -1,127 +1,117 @@
 # Restaurant Ordering Web Application
 
-A comprehensive multi-restaurant platform that enables restaurants to create and manage their digital menus while allowing customers to discover and order from multiple restaurants in one place. The platform serves two main user groups:
+A multi-restaurant platform that enables restaurants to create and manage their digital menu while allowing customers to discover and order from multiple restaurants in one place. The platform serves two main user groups:
 
-- **For Restaurants**: Create and manage their digital menus, receive and process orders in real-time, and track order history - all through an intuitive kitchen interface.
+- **For Restaurants**: Create and manage their digital menu, receive and process orders in real-time, and track order history - all through an intuitive kitchen interface.
 - **For Customers**: Discover local restaurants, browse digital menus, place orders with customizations, and track order status through a seamless ordering experience.
+
 
 ## Distinctiveness and Complexity
 
-This project stands out from other CS50W projects in several ways:
+This project stands out from other CS50W projects (including the old pizza project) in several ways:
 
-1. **Multi-Restaurant Platform**: Unlike single-restaurant systems, this application:
-   - Allows multiple restaurants to self-register and manage their presence
-   - Provides a marketplace for customers to discover and order from various restaurants
-   - Maintains separate menu management and order processing for each restaurant
+1. **Multi-Restaurant Platform**: This application allows customers to browse and order from multiple restaurants in one place. Implements a marketplace model rather than a single-store model
 
-2. **Real-Time Updates**: The application implements real-time cart management and order status updates using AJAX:
+2. **Dual-Role and Interface System**: Previous projects uses Admin-only menu management through Django Admin interface. This application provides a kitchen interface for restaurant staff to manage menus and handle orders. This is a new feature that is not present in the old pizza project:
+   - Customer interface for browsing restaurants and ordering food
+   - Kitchen interface for restaurant staff to manage menus and handle orders
+
+3. **Menu Management**: The application allows restaurants to manage their menus (Create, Update, Delete) directly through a kitchen interface. This is a new feature that is not present in the old pizza project.
+
+4. **Real-Time Updates**: The application implements real-time cart management and order status updates using AJAX:
    - Live cart quantity updates in the navigation bar
    - Dynamic price calculations
+   - Complex order status workflow (incart → paid → accepted → completed/cancelled)
    - Immediate order status changes visible to both customers and kitchen staff
-   - Real-time menu availability updates
+   - Order history for both customers and restaurants
 
-3. **Complex Data Model**: The project uses a database structure with multiple interconnected models:
+5. **Complex Data Model**: The project uses a sophisticated database structure with multiple interconnected models:
    - User model with role-based access (customer/kitchen staff)
    - Restaurant model with associated menu items and categories
    - Order system with multiple status states and item quantities
    - Cancellation system with reason tracking
 
-4. **Modern UI/UX Features**:
+6. **Modern UI/UX Features**:
    - Responsive grid layouts for restaurants and menu items
    - Modal-based interactions for menu management
    - Dynamic cart updates without page reloads
    - Status badges and visual feedback for order states
-   - Customizable menu items with add-on options
 
-## Key Differences from Single-Restaurant Systems
 
-This project significantly expands upon traditional single-restaurant ordering systems in several ways:
+## File Structure and Contents
 
-1. **Restaurant Management**:
-   - Custom kitchen interface instead of Django Admin
-   - Real-time menu management with image uploads
-   - Restaurant-specific dashboards and analytics
-   - Support for restaurant chains and branches
+### Backend (Python/Django)
 
-2. **Advanced Order Processing**:
-   - Sophisticated order status workflow
-   - Real-time order tracking and updates
-   - Detailed cancellation system with reason tracking
-   - Separate order queues per restaurant
-   - Comprehensive order history for both parties
+- `models.py`: Defines database models for Users, Restaurants, Menu Items, Orders, and more
+- `views.py`: Contains view functions for both customer and kitchen interfaces
+- `urls.py`: URL routing configuration
 
-3. **User Roles and Permissions**:
-   - Dual interface system (customer/kitchen)
-   - Restaurant-staff associations
-   - Role-based access control
-   - Restaurant-specific permissions
+### Frontend (JavaScript)
 
-4. **Technical Enhancements**:
-   - AJAX-powered real-time updates
-   - Modular JavaScript architecture
-   - Dynamic cart management
-   - Modal-based interactions
-   - Real-time calculations and updates
-
-5. **Scalable Data Model for future development**:
-   - Support for restaurant chains
-   - Menu categorization
-   - Rating and review system
-   - Operating hours management
+- `static/js/cart_management.js`: Handles all cart-related functionality
+- `static/js/kitchen_menu.js`: Manages kitchen staff's menu editing interface
+- `static/js/cancellation_mgmt.js`: Handles order cancellation workflow
+- `static/js/update_cart_total.js`: Updates cart totals and quantities
+- `static/js/util.js`: Utility functions used across the application
 
 ### Templates (HTML)
 
-- `templates/orders/` (Customer Interface):
-  - `restaurant_selection.html`: Homepage featuring:
-    * Restaurant grid display
-    * Rating and cuisine information
-    * Operating hours
-    * Restaurant images
-    * Promotional content section
-
-  - `menu_display.html`: Restaurant menu page with:
-    * Menu item grid layout
-    * Item images and descriptions
-    * Price display
-    * Quantity controls
-    * Dynamic cart integration
-
-  - `checkout.html`: Checkout interface including:
-    * Order summary
-    * Item quantities and prices
-    * Total calculation
-
-    * Payment form
-    * Order confirmation
-
-  - `cart.html`: Shopping cart page with real-time item management, quantity controls, and checkout options
-
+- `templates/orders/`:
   - `add_on_modal.html`: Modal template for customizing menu items with options like sweetness levels and special instructions
-
-  - `order_confirmed.html`: Simple confirmation page displayed after successful order placement
-
+  - `cart.html`: Shopping cart page with real-time item management, quantity controls, and checkout options
+  - `checkout.html`: Order checkout page
   - `history.html`: Detailed order history page showing past orders with timestamps, items, and status information
+  - `menu_display.html`: Restaurant menu view
+  - `order_confirmed.html`: Simple confirmation page displayed after successful order placement
+  - `restaurant_selection.html`: Homepage with restaurant listings
 
-- `templates/kitchen/` (Kitchen Staff Interface):
-  - `kitchen_menu.html`: Menu management page with:
-    * Current menu item display
-    * Add/Edit/Delete controls
-    * Image upload interface
-    * Modal forms for item management
-    * Real-time updates
+- `templates/kitchen/`:
+  - `kitchen_menu.html`: Menu management interface
+  - `kitchen_orders.html`: Active orders view
+  - `kitchen_history.html`: Order history view
 
-  - `kitchen_orders.html`: Active orders dashboard:
-    * New and in-progress orders
-    * Order details and items
-    * Status management controls
-    * Cancellation interface
-    * Customer information
+## How to Run the Application
 
-  - `kitchen_history.html`: Order history view with:
-    * Complete order history
-    * Filtering and sorting options
-    * Status tracking
-    * Order details
-    * Cancellation records
+1. Ensure you have Python 3.8+ installed
+2. Clone the repository
+3. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+4. Install required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. Apply database migrations:
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+6. Create a superuser:
+   ```bash
+   python manage.py createsuperuser
+   ```
+7. Run the development server:
+   ```bash
+   python manage.py runserver
+   ```
+8. Visit `http://127.0.0.1:8000/` in your browser
 
-// ... rest of the file ... 
+## Additional Information
+
+- The application uses Django's built-in authentication system with custom user model
+- Media files (restaurant and menu item images) are stored in the `media/` directory
+- Static files are collected in the `static/` directory
+- The project includes CSRF protection for all POST requests
+- JavaScript modules are used for better code organization
+- Bootstrap 5 is used for responsive design
+
+## Requirements
+
+See `requirements.txt` for a complete list of Python packages required. Key dependencies include:
+
+- Django
+- Pillow (for image handling)
+- django-crispy-forms
+- django-cleanup
